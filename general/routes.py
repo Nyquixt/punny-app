@@ -22,6 +22,8 @@ def index():
         tag_list = [tag_dict.get(tag)]
         post = Post.objects(tags__in=tag_list)
 
+    post = reversed(post)
+
     if 'username' in session:
         user = User.objects.get(username=session['username'])
         upvote_posts = user.upvote_posts
