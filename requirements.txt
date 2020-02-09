@@ -1,0 +1,10 @@
+flask
+boto3
+pytest
+sendgrid==5.6.0
+uwsgi
+Flask-Script==2.0.6
+mongoengine==0.16.1
+Flask-mongoengine==0.9.5
+Flask-WTf==0.14.2
+py-bcrypt==0.4
