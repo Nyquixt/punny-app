@@ -1,0 +1,41 @@
+{% extends "theme.html" %}
+{% block title %}Punny App | Upload{% endblock %}
+{%block head %}
+    <style>
+        li {
+            list-style: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+{% from "_include/_formhelpers.html" import render_field, render_field_select %}
+<form method="POST" enctype="multipart/form-data" class="form-group">
+    {{ form.hidden_tag() }}
+    <div class="container" style="margin-top:50px">
+
+        <h1>Ready to share your meme?</h1>
+
+        {{ render_field(form.title, class='form-control', is_required=True) }}
+        {{ render_field(form.tags, class='', is_required=True )}}
+        
+        <br>
+        <img class="border" id="output" width="100%" src="../../static/image/insertMeme.png" />
+        <div class="custom-file">
+            {{ form.meme(class='custom-file-input', onchange="loadFile(event)") }}
+            <label class="custom-file-label">{{ form.meme.label }}</label>
+        </div>
+        <br><br>
+        {{ render_field(form.link, class='form-control', pattern="https://.*") }}
+
+        <div style="text-align: center;">
+            <input class="btn normal-btn" type="button" value="Go Back Home" onclick="window.location.href = '/';">
+            <button class="btn normal-btn" type="submit">Submit</button>
+        </div>
+
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="../../static/js/uploadMeme.js"></script>
+{% endblock %}

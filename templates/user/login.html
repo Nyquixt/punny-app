@@ -1,0 +1,24 @@
+{% extends "theme.html" %} 
+{% block title %}Punny App | Log In{% endblock %} 
+{%block head %}{% endblock %} 
+{% block content %}
+{% from "_include/_formhelpers.html" import render_field %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="container">
+        <h1>Sign In</h1>
+        <hr>
+
+        {{ render_field(form.username, class='form-control', is_required=True) }}
+        {{ render_field(form.password, class='form-control', is_required=True) }}
+
+        <p><a href="#">Forgot Password?</a></p>
+    
+        <button type="submit" class="registerbtn">Sign In</button>
+    </div>
+
+    <div class="container">
+        <p style="text-align: center;">Don't have an account? <a href='{{ url_for("user_app.register") }}'>Sign Up</a>.</p>
+    </div>
+</form>
+{% endblock %}

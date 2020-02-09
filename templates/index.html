@@ -1,0 +1,132 @@
+{% extends "theme.html" %}
+{% block title %}Punny App | Home{% endblock %}
+{%block head %}{% endblock %}
+{% block content %}
+<!-- Overlay effect when opening sidebar on small screens -->
+
+<!-- !PAGE CONTENT! -->
+<div>
+    <!-- Filter -->
+    <header>
+        <div class="container">
+            <div class="" style="text-align: center;">
+                <hr>
+                <form>
+                    {% if tag == 'maths' %}
+                    <input type="submit" name="action" value="maths" class="btn normal-btn">
+                    {% else %}
+                    <input type="submit" name="action" value="maths" class="btn btn-light">
+                    {% endif %}
+
+                    {% if tag == 'general' %}
+                    <input type="submit" name="action" value="general" class="btn normal-btn">
+                    {% else %}
+                    <input type="submit" name="action" value="general" class="btn btn-light">
+                    {% endif %}
+
+                    {% if tag == 'compsci' %}
+                    <input type="submit" name="action" value="compsci" class="btn normal-btn">
+                    {% else %}
+                    <input type="submit" name="action" value="compsci" class="btn btn-light">
+                    {% endif %}
+
+                    {% if tag == 'physics' %}
+                    <input type="submit" name="action" value="physics" class="btn normal-btn">
+                    {% else %}
+                    <input type="submit" name="action" value="physics" class="btn btn-light">
+                    {% endif %}
+
+                    {% if tag == 'biology' %}
+                    <input type="submit" name="action" value="biology" class="btn normal-btn">
+                    {% else %}
+                    <input type="submit" name="action" value="biology" class="btn btn-light">
+                    {% endif %}
+
+                    {% if tag == 'chemistry' %}
+                    <input type="submit" name="action" value="chemistry" class="btn normal-btn">
+                    {% else %}
+                    <input type="submit" name="action" value="chemistry" class="btn btn-light">
+                    {% endif %}
+
+                    {% if tag == 'all' or tag == None %}
+                    <input type="submit" name="action" value="all" class="btn normal-btn">
+                    {% else %}
+                    <input type="submit" name="action" value="all" class="btn btn-light">
+                    {% endif %}
+
+                </form>
+            </div>
+            <hr>
+        </div>
+    </header>
+
+    {% for p in post %}
+    <div class="container border">
+        <br>
+        <h3>{{ p.title }}</h3>
+        {% if p.link %}
+        <a href="{{ p.link }}" style="color: rgb(41, 118, 116);" target="_blank">Link to Topic</a>
+        {% endif %}
+        <hr>
+        <img src="{{ url_for('post_app.image', id=p.id) }}" alt="{{ p.title }}" style="width: 100%;">
+        <hr>
+        {% if p.id in upvote_posts %}
+        <button data-postid="{{ p.id }}" class="btn upvote normal-btn"><i class="fa fa-arrow-up"
+            style="color:lightgray;"></i></button>
+        {% else %}
+        <button data-postid="{{ p.id }}" class="btn upvote"><i class="fa fa-arrow-up"
+                style="color:lightgray;"></i></button>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+</div>
+<!-- End page content -->
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.upvote', function (event) {
+            if ($(this).hasClass('normal-btn')) { // un-upvoting
+                $(this).removeClass('normal-btn')
+                $.ajax({
+                    url: '/unupvote',
+                    type: 'post',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        'postid': $(this).data('postid')
+                    }),
+                    success: function (res) {
+                        // console.log(res);
+                    },
+                    error: function (xhr) {
+                        // console.log(xhr);
+                    }
+                });
+            } else { //upvoting
+                $(this).addClass('normal-btn')
+
+                $.ajax({
+                    url: '/upvote',
+                    type: 'post',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        'postid': $(this).data('postid')
+                    }),
+                    success: function (res) {
+                        // console.log(res);
+                    },
+                    error: function (xhr) {
+                        // console.log(xhr);
+                    }
+                });
+            }
+
+            event.preventDefault()
+        });
+    });
+</script>
+{% endblock %}
