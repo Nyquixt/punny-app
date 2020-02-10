@@ -70,12 +70,22 @@
         <hr>
         <img src="{{ url_for('post_app.image', id=p.id) }}" alt="{{ p.title }}" style="width: 100%;">
         <hr>
+
+        {% if 'username' in session %}
+
         {% if p.id in upvote_posts %}
         <button data-postid="{{ p.id }}" class="btn upvote normal-btn"><i class="fa fa-arrow-up"
-            style="color:lightgray;"></i></button>
+                style="color:lightgray;"></i></button>
         {% else %}
         <button data-postid="{{ p.id }}" class="btn upvote"><i class="fa fa-arrow-up"
                 style="color:lightgray;"></i></button>
+        {% endif %}
+
+        {% else %}
+
+        <button data-postid="{{ p.id }}" class="btn"><i class="fa fa-arrow-up"
+            style="color:lightgray;"></i></button>
+
         {% endif %}
     </div>
     {% endfor %}
